@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="OmniSwarm – Decentralized WebGPU AI Agent Network. Peer-to-peer browser compute powered by WebGPU, WebRTC, and Web Workers." />
+  <title>OmniSwarm – Decentralized AI Agent Network</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- ── Header ──────────────────────────────────────────────────────────── -->
+    <header id="header">
+      <div class="logo">
+        <div class="logo-icon" aria-hidden="true"></div>
+        <div>
+          <div class="logo-text">OmniSwarm</div>
+          <div class="logo-sub">Decentralized WebGPU Agent Network</div>
+        </div>
+      </div>
+
+      <div id="header-center">
+        <div class="header-stat">🌐 Peers online: <span id="peer-count">–</span></div>
+        <div class="header-stat">⚙ Level: <span id="header-level">1</span></div>
+        <span id="gpu-badge" class="badge badge-cpu">🖥 CPU</span>
+      </div>
+
+      <div class="attribution">
+        Made by <a href="https://github.com/Harshitkashyap2027" target="_blank" rel="noopener">Harshit Kashyap</a>
+      </div>
+    </header>
+
+    <!-- ── Sidebar – Gamified Dashboard ────────────────────────────────────── -->
+    <aside id="sidebar">
+
+      <!-- Compute Level Ring -->
+      <div class="card">
+        <div class="card-title">Compute Level</div>
+        <div class="level-ring-wrap">
+          <div class="ring-container" aria-label="Compute level progress ring">
+            <svg class="ring-svg" viewBox="0 0 96 96" aria-hidden="true">
+              <defs>
+                <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#00f5ff" />
+                  <stop offset="100%" stop-color="#a78bfa" />
+                </linearGradient>
+              </defs>
+              <circle class="ring-track" cx="48" cy="48" r="40" />
+              <circle class="ring-fill" id="ring-fill-el" cx="48" cy="48" r="40" />
+            </svg>
+            <div class="ring-center">
+              <span id="compute-level" aria-live="polite">1</span>
+              <span class="ring-label">LEVEL</span>
+            </div>
+          </div>
+
+          <div class="xp-bar-wrap">
+            <div class="xp-bar-bg">
+              <div id="xp-bar-fill"></div>
+            </div>
+            <div id="xp-label">0 / 100 XP</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="card">
+        <div class="card-title">Your Contribution</div>
+        <div class="stat-grid">
+          <div class="stat-item">
+            <div class="stat-value" id="tasks-resolved">0</div>
+            <div class="stat-label">Tasks</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="chunks-processed">0</div>
+            <div class="stat-label">Chunks</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Peer info -->
+      <div class="card">
+        <div class="card-title">Swarm Identity</div>
+        <div class="peer-info-row">
+          <div class="dot" aria-hidden="true"></div>
+          <span>Connected</span>
+        </div>
+        <div id="peer-id-display" aria-label="Your peer ID">–</div>
+        <div class="peer-count-row" style="margin-top:10px">
+          <span>Peers online</span>
+          <span id="peer-count-sidebar">–</span>
+        </div>
+      </div>
+
+      <!-- Tech stack info -->
+      <div class="card">
+        <div class="card-title">Stack</div>
+        <ul style="list-style:none;font-size:0.7rem;color:var(--text-secondary);line-height:2">
+          <li>⚡ WebGPU · LLM Inference</li>
+          <li>🔀 WebRTC · P2P Data Channels</li>
+          <li>🧵 Web Workers · Off-thread AI</li>
+          <li>💾 OPFS · Model Weight Cache</li>
+          <li>🎨 Canvas API · Swarm Visualiser</li>
+        </ul>
+      </div>
+
+    </aside>
+
+    <!-- ── Main Area ─────────────────────────────────────────────────────────── -->
+    <main id="main">
+
+      <!-- Swarm Visualiser -->
+      <section id="visualiser" aria-label="Swarm network visualiser">
+        <canvas id="swarm-canvas" aria-hidden="true"></canvas>
+        <div class="visualiser-label">⬡ Live Swarm Network</div>
+      </section>
+
+      <!-- Prompt Matrix -->
+      <section id="prompt-matrix" aria-label="Agent prompt editor">
+        <div id="file-explorer" role="navigation" aria-label="Files">
+          <div class="explorer-title">Files</div>
+          <ul id="file-list" role="listbox" aria-label="Agent files"></ul>
+        </div>
+        <div id="editor-pane">
+          <div class="editor-header">
+            <span id="editor-filename">agent-main.js</span>
+            <button id="run-btn" aria-label="Run agent task">▶ Run</button>
+          </div>
+          <textarea
+            id="code-editor"
+            spellcheck="false"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            aria-label="Code editor"
+          ></textarea>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ── Right Panel ──────────────────────────────────────────────────────── -->
+    <aside id="right-panel">
+
+      <!-- Prompt input -->
+      <div class="panel-section" style="flex:0 0 130px">
+        <div class="panel-header">Swarm Prompt (Ctrl+Enter to run)</div>
+        <textarea
+          id="prompt-input"
+          placeholder="Describe what you want the swarm to do…&#10;e.g. Summarise the following 10,000 documents across all available peers."
+          spellcheck="false"
+        ></textarea>
+      </div>
+
+      <!-- LLM Output -->
+      <div class="panel-section" style="flex:1">
+        <div class="panel-header">Swarm Output</div>
+        <div id="output-area" role="log" aria-live="polite" aria-label="LLM output"></div>
+      </div>
+
+      <!-- System console -->
+      <div class="panel-section" style="flex:0 0 140px">
+        <div class="panel-header">Console</div>
+        <div id="console-output" role="log" aria-live="polite" aria-label="System console"></div>
+      </div>
+
+    </aside>
+
+    <!-- ── Footer ──────────────────────────────────────────────────────────── -->
+    <footer id="footer">
+      <span>OmniSwarm · Zero-Cost Distributed AI Compute · v1.0.0</span>
+      <span>Made with ❤ by <a href="https://github.com/Harshitkashyap2027" target="_blank" rel="noopener">Harshit Kashyap</a></span>
+      <span>WebGPU · WebRTC · OPFS · Web Workers</span>
+    </footer>
+
+  </div><!-- /#app -->
+
+  <!-- Scripts (load order matters) -->
+  <script src="canvas.js"></script>
+  <script src="swarm.js"></script>
+  <script src="app.js"></script>
+
+  <!-- Inline script: sync ring fill with XP bar + peer-count sidebar -->
+  <script>
+    (function () {
+      // Mirror peer count to sidebar widget
+      const obs = new MutationObserver(() => {
+        const val = document.getElementById('peer-count').textContent;
+        const el = document.getElementById('peer-count-sidebar');
+        if (el) el.textContent = val;
+        const hl = document.getElementById('header-level');
+        const cl = document.getElementById('compute-level');
+        if (hl && cl) hl.textContent = cl.textContent;
+      });
+      const pc = document.getElementById('peer-count');
+      if (pc) obs.observe(pc, { childList: true, characterData: true, subtree: true });
+
+      // Keep SVG ring fill in sync with XP bar width
+      const xpObs = new MutationObserver(() => {
+        const fill = document.getElementById('xp-bar-fill');
+        const ring = document.getElementById('ring-fill-el');
+        if (!fill || !ring) return;
+        const pct = parseFloat(fill.style.width) / 100;
+        const circumference = 2 * Math.PI * 40; // r=40
+        ring.style.strokeDashoffset = circumference * (1 - pct);
+      });
+      const xpFill = document.getElementById('xp-bar-fill');
+      if (xpFill) xpObs.observe(xpFill, { attributes: true, attributeFilter: ['style'] });
+    }());
+  </script>
+</body>
+</html>
