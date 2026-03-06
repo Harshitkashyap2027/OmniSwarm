@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Decentralized WebGPU AI Agent Network",
   "scripts": {
-    "test": "node --test tests/worker.test.js"
+    "test": "node --test tests/worker.test.js tests/images.test.js"
   },
   "author": "Harshit Kashyap",
   "license": "MIT"
