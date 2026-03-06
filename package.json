@@ -1,0 +1,10 @@
+{
+  "name": "omniswarm",
+  "version": "1.0.0",
+  "description": "Decentralized WebGPU AI Agent Network",
+  "scripts": {
+    "test": "node --test tests/worker.test.js"
+  },
+  "author": "Harshit Kashyap",
+  "license": "MIT"
+}
