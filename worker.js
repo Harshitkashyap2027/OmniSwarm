@@ -61,6 +61,7 @@ function simulateTokenStream(prompt, onToken, onDone) {
   const intro = RESPONSE_PHRASES[Math.floor(Math.random() * RESPONSE_PHRASES.length)];
   const reply = `${intro}\n\nPrompt received: "${prompt.slice(0, 120)}${prompt.length > 120 ? '…' : ''}"\n\nThe OmniSwarm network has distributed this task across ${Math.floor(Math.random() * 8) + 2} active peers. Each peer is running a quantized language model (Phi-3 Mini / Llama-3-8B-Web) entirely within the browser via WebGPU matrix operations. Results will be merged and returned to you without a single byte touching an external API.\n\n[Swarm task complete ✓]`;
 
+  let i = 0;
   const interval = setInterval(() => {
     if (i < reply.length) {
       onToken(reply[i]);
